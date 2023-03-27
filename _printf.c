@@ -1,46 +1,107 @@
 #include "main.h"
 
+void print_buffer(char buffer[], int *buff_ind);
 
 /**
-* _printf - our own printf function
-* @format: A character string, composed of zero of more directives
-*
-* Description: Writes a formatted string to the standard output
-* Return: an integer. The number of characters printed excluding the null byte
-* A: if format is null then we return -1
-* B: as long as format of index is not null, we increment
-* C: if the index is not a percentage then we puts and count++
-* D: ERASED THE DEEEE
-* E: if it is not a null then we scan that letter. pass it into helper func
-* F: its prob a null so we return -1
-*/
+
+- _printf - Printf function
+- @format: format.
+- Patrick and Winnie team project
+- Return: Printed chars.
+- /
 
 int _printf(const char *format, ...)
+
 {
-	int i = 0;
-	int count = 0;
-	va_list argu;
 
-	va_start(argu, format);
+int i, printed = 0, printed_chars = 0;
 
-	if (!format)/* A */
-		return (-1);
+int flags, width, precision, size, buff_ind = 0;
 
-	for (i = 0; format[i]; i++)/* B */
-	{
-		if (format[i] != '%')/* C */
-		{
-			count++;
-			_putchar(format[i]);
-		}
-		else if (format[i + 1])/* E */
-		{
-			i++;
-			count = no_struct(format[i], count, argu);
-		}
-		else/* F */
-			return (-1);
-	}
-	va_end(argu);
-	return (count);
+va_list list;
+
+char buffer[BUFF_SIZE];
+
+if (format == NULL)
+
+return (-1);
+
+va_start(list, format);
+
+for (i = 0; format && format[i] != '\0'; i++)
+
+{
+
+if (format[i] != '%')
+
+{
+
+buffer[buff_ind++] = format[i];
+
+if (buff_ind == BUFF_SIZE)
+
+print_buffer(buffer, &buff_ind);
+
+/* write(1, &format[i], 1);*/
+
+printed_chars++;
+
+}
+
+else
+
+{
+
+print_buffer(buffer, &buff_ind);
+
+flags = get_flags(format, &i);
+
+width = get_width(format, &i, list);
+
+precision = get_precision(format, &i, list);
+
+size = get_size(format, &i);
+
+++i;
+
+printed = handle_print(format, &i, list, buffer,
+
+flags, width, precision, size);
+
+if (printed == -1)
+
+return (-1);
+
+printed_chars += printed;
+
+}
+
+}
+
+print_buffer(buffer, &buff_ind);
+
+va_end(list);
+
+return (printed_chars);
+
+}
+
+/**
+
+- print_buffer - Prints the contents of the buffer if it exist
+- @buffer: Array of chars
+- @buff_ind: Index at which to add next char, represents the length.
+- Patrick and Winnie team project
+- /
+
+void print_buffer(char buffer[], int *buff_ind)
+
+{
+
+if (*buff_ind > 0)
+
+write(1, &buffer[0], *buff_ind);
+
+- buff_ind = 0;
+
 }
