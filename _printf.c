@@ -1,11 +1,8 @@
 #include "main.h"
-
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 
-
-int main(void);
 int _printf(const char *format, ...) {
     va_list args;
     int count = 0;
@@ -57,4 +54,14 @@ int _printf(const char *format, ...) {
     va_end(args);
 
     return count;
+}
+
+int main() {
+    int n = 42;
+    char c = 'x';
+    char *s = "Hello, world!";
+
+    _printf("n = %d, c = %c, s = %s\n", n, c, s);
+
+    return 0;
 }
