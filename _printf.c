@@ -55,13 +55,3 @@ int _printf(const char *format, ...) {
 
     return count;
 }
-
-int main() {
-    int n = 42;
-    char c = 'x';
-    char *s = "Hello, world!";
-
-    _printf("n = %d, c = %c, s = %s\n", n, c, s);
-
-    return 0;
-}
