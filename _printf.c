@@ -5,6 +5,7 @@
 #include <string.h>
 
 
+int main(void);
 int _printf(const char *format, ...) {
     va_list args;
     int count = 0;
